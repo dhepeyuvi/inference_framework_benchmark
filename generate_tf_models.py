@@ -32,7 +32,8 @@ def from_kerasObject_to_pbFile2(keras_model,pb_path):
 
     graph_def = optimize_for_inference_lib.optimize_for_inference(graph_def,
                                                                   graph_inputs,
-                                                                  graph_outputs,                                                                                   tf.float32.as_datatype_enum)
+                                                                  graph_outputs,
+                                                                  tf.float32.as_datatype_enum)
 
     # Export frozen graph
     with tf.io.gfile.GFile(pb_path, 'wb') as f:
@@ -84,7 +85,11 @@ def CREATE_BUILDERS():
     model_names = []
 
 
-
+    model_names.append("MobileNetV3Large")
+    builders.append(applications.MobileNetV3Large)
+    model_names.append("ResNet50")
+    builders.append(applications.ResNet50)
+    
     """
     model_names.append("MobileNetV2")
     builders.append(applications.MobileNetV2)
@@ -92,10 +97,6 @@ def CREATE_BUILDERS():
     builders.append(applications.MobileNet)
     model_names.append("MobileNetV3Small")
     builders.append(applications.MobileNetV3Small)
-    model_names.append("MobileNetV3Large")
-    builders.append(applications.MobileNetV3Large)
-    model_names.append("ResNet50")
-    builders.append(applications.ResNet50)
     model_names.append("ResNet101V2")
     builders.append(applications.ResNet101V2)
     model_names.append("ResNet152V2")
@@ -155,10 +156,10 @@ def CREATE_BUILDERS():
     builders.append(applications.efficientnet.EfficientNetB5)
     model_names.append("EfficientNetB6")
     builders.append(applications.efficientnet.EfficientNetB6)
-    """
+    
     model_names.append("EfficientNetB7")
     builders.append(applications.efficientnet.EfficientNetB7)
-    """
+    
     from env.install.NewNeuralNetworks import efficientnet_V2
     model_names.append("EfficientNetB0V2")
     builders.append(efficientnet_V2.EfficientNetV2B0)

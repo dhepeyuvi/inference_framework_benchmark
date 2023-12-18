@@ -3,7 +3,7 @@
 INPUT_PB_PATH=$1
 OUTPUT_ONNX_PATH=$2
 
-GET_IN_OUT_PY=/data/appli_PITSI/users/pochelu/project/inference_system/pierrick_tools/tensorflow_graph_parser.py
+GET_IN_OUT_PY=/home/work/inference_framework_benchmark/pierrick_tools/tensorflow_graph_parser.py
 
 # Regex taking the input name and the output name of the DAG
 TENSOR_IN_OUT_NAME=$(python3 ${GET_IN_OUT_PY} ${INPUT_PB_PATH} "^x:|input:" "Softmax:")

@@ -14,8 +14,8 @@ x2 = np.random.uniform(0, 1, (1, 224, 224, 3)).astype(np.float32)
 GPU_ID=0
 
 
-
-def BENCH(model_ptr, path, config,POSSIBLE_BATCH_SIZE=[1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]):
+#, 128, 256, 512, 1024]
+def BENCH(model_ptr, path, config,POSSIBLE_BATCH_SIZE=[1, 2, 4, 8, 16, 32, 64]):
     #print(model_ptr)
     print(path)
     

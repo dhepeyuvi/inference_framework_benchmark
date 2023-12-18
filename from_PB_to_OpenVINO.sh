@@ -4,7 +4,7 @@ INPUT_SIZE=$3 #not used today
 
 #e.g., ./models_lib/TF_PB/ResNet50.pb ./models_lib/OpenVINO/ResNet50/
 
-GET_IN_OUT_PY=./tensorflow_graph_parser.py
+GET_IN_OUT_PY=/home/work/inference_framework_benchmark/pierrick_tools/tensorflow_graph_parser.py
 
 TENSOR_IN_OUT_NAME=$(python3 ${GET_IN_OUT_PY} ${INPUT_PB_PATH} "^x:|input:" "Softmax:")
 

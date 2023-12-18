@@ -44,6 +44,8 @@ def from_kerasObject_to_pbFile(keras_model,pb_path):
 
     filename=os.path.basename(pb_path)
     dirname=os.path.dirname(pb_path)
+    print(f"Filename:{filename}")
+    print(f"Dirname:{dirname}")
 
     # Convert Keras model to ConcreteFunction
     full_model = tf.function(lambda x: keras_model(x))
@@ -206,12 +208,13 @@ def save_models(builder, model_name, SavedModel_path,PB_path,force=True):
 
 def RUN():
     builders, model_names=CREATE_BUILDERS()
+    # Remember to create the TF_PB folder inside the models_lib
     for builder, model_name in zip(builders, model_names):
         #if model_name!="ResNet50":
         #    print("break")
         #else:
-        SavedModel_path="./models_lib/TF_SavedModel/" + model_name
-        PB_path="./models_lib/TF_PB/" + model_name+".pb"
+        SavedModel_path="/home/work/inference_framework_benchmark/models_lib/TF_SavedModel/" + model_name
+        PB_path="/home/work/inference_framework_benchmark/models_lib/TF_PB/" + model_name+".pb"
         save_models(builder, model_name, SavedModel_path, PB_path)
         print("saved")
 

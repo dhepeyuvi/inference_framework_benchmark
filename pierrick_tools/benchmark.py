@@ -9,13 +9,13 @@ import os
 
 
 models_lib_path="./models_lib/"
-x = np.random.uniform(0, 1, (4096*2, 224, 224, 3)).astype(np.float32)
+x = np.random.uniform(0, 1, (32, 224, 224, 3)).astype(np.float32)
 x2 = np.random.uniform(0, 1, (1, 224, 224, 3)).astype(np.float32)
 GPU_ID=0
 
 
-#, 128, 256, 512, 1024]
-def BENCH(model_ptr, path, config,POSSIBLE_BATCH_SIZE=[1, 2, 4, 8, 16, 32, 64]):
+#[64, 128, 256, 512, 1024]
+def BENCH(model_ptr, path, config,POSSIBLE_BATCH_SIZE=[1, 2, 4, 8, 16, 32]):
     #print(model_ptr)
     print(path)
     

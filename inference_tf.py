@@ -95,10 +95,10 @@ class TensorflowInferenceEngine:
         tfconf=tf.ConfigProto(allow_soft_placement=True,log_device_placement=False,device_count={'CPU': 1, 'GPU': nbgpu})
         if nbgpu>0:
             tfconf.gpu_options.allow_growth=self.allow_growth
-        self.sess = tf.Session(config=tfconf)
+        self.session = tf.Session(config=tfconf)
 
         # This portion of code is risky
-        inout = get_input_output_tensor_name(path,self.sess,self.graph_name)
+        inout = get_input_output_tensor_name(path,self.session,self.graph_name)
         self.input_tensor_name=inout[0]
         self.output_tensor_name=inout[1]
         self.FAKE_PREDICT_MODE=False#usefull to measure Python overhead
@@ -108,7 +108,7 @@ class TensorflowInferenceEngine:
 
         #try:
         self.input_tensor, self.output_tensor=load_tf_model(
-            self.sess,
+            self.session,
             self.input_tensor_name,
             self.output_tensor_name,
             path,
@@ -127,22 +127,22 @@ class TensorflowInferenceEngine:
             return pred #usefull to measure Python overhead
 
         for i, batch_data in gen:
-            pred[i:i + self.batch_size] = self.sess.run(
+            pred[i:i + self.batch_size] = self.session.run(
                 self.output_tensor,
                 feed_dict={self.input_tensor: batch_data})
         return pred
 
     def _free_gpu_memory(self):
         #tf.keras.backend.clear_session()
-        if self.sess is not None:
-            self.sess.close()
-            self.sess = None
+        if self.session is not None:
+            self.session.close()
+            self.session = None
         self.input_tensor=None
         self.output_tensor=None
 
 
     def is_ok(self):
-        sess_ok=self.sess is not None
+        sess_ok=self.session is not None
         input_ok=self.input_tensor is not None
         output_ok=self.output_tensor is not None
         return sess_ok and input_ok and output_ok
@@ -154,11 +154,34 @@ class TensorflowInferenceEngine:
 
 if __name__ == "__main__":
     from pierrick_tools.benchmark import BENCH
+    import os
+    from dotenv import load_dotenv
+    
     for g in [0]:
         config = {}
         config["gpuid"] = g
         config["XLA"] = True
         print(config)
-        for model_path in [["./models_lib/TF_PB/DenseNet201.pb", "./models_lib/TF_PB/ResNet50.pb" , "./models_lib/TF_PB/EfficientNetB0.pb", "./models_lib/TF_PB/VGG19.pb"][int(sys.argv[1])]]:
-            print(model_path)
-            BENCH(TensorflowInferenceEngine,model_path,config,[128])
+        # Directory containing pb files
+        models_lib_dir = "./models_lib/TF_PB"
+
+        # List all .pb files in the directory
+        pb_files = [f for f in os.listdir(models_lib_dir) if f.endswith(".pb")]
+
+        # Check if at least one .pb file is found
+        if not pb_files:
+            print("No .pb files found in the directory:", models_lib_dir)
+            sys.exit(1)
+
+        # Select all available models
+        selected_models = [os.path.join(models_lib_dir, model) for model in pb_files]
+
+        # Iterate over selected models
+        for model_path in selected_models:
+            print("Selected Model Path:", model_path)
+            # Check if 'TF_XLA_FLAGS' is set in the environment
+            tf_xla_flags = os.environ.get("TF_XLA_FLAGS")
+            if tf_xla_flags is not None and tf_xla_flags == "--tf_xla_auto_jit=2":
+                BENCH(TensorflowInferenceEngine, model_path, config, [128])
+            else:
+                print("TF_XLA_FLAGS is not set or has an incorrect value.")

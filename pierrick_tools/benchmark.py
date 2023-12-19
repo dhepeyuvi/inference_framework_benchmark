@@ -8,8 +8,8 @@ import time
 import os
 
 
-models_lib_path="./models_lib/"
-x = np.random.uniform(0, 1, (32, 224, 224, 3)).astype(np.float32)
+models_lib_path="/home/work/inference_framework_benchmark/models_lib"
+x = np.random.uniform(0, 1, (4096, 224, 224, 3)).astype(np.float32)
 x2 = np.random.uniform(0, 1, (1, 224, 224, 3)).astype(np.float32)
 GPU_ID=0
 
@@ -32,8 +32,10 @@ def BENCH(model_ptr, path, config,POSSIBLE_BATCH_SIZE=[1, 2, 4, 8, 16, 32]):
         st=time.time()
         y=model.predict(x)
         enlapsted_time = time.time() - st
+        print(f'Time:{enlapsted_time} milisecs')
         through=round(len(x) / enlapsted_time)
-        print("throughput: ", through)
+        
+        print(f"throughput:{through} preds/sec", through)
         throughputs.append(through)
   
         """

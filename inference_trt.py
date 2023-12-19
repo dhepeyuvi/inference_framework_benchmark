@@ -146,6 +146,25 @@ class TrtInferenceEngine(AbstractRuntimeEngine):
 from pierrick_tools.benchmark import BENCH
 import sys
 if __name__ == "__main__":
+    from pierrick_tools.benchmark import BENCH
+    import os
+    from dotenv import load_dotenv
+    
+    for g in [0]:
+        config = {}
+        config["gpuid"] = g
+        config["XLA"] = True
+        print(config)
+        # Directory containing pb files
+        models_lib_dir = "./models_lib/ONNX"
+
+        # List all .pb files in the directory
+        pb_files = [f for f in os.listdir(models_lib_dir) if f.endswith(".onnx")]
+
+        # Check if at least one .pb file is found
+        if not pb_files:
+            print("No .onnx files found in the directory:", models_lib_dir)
+            sys.exit(1)
     for g in [1]:
         config = {}
         config["gpuid"] = g

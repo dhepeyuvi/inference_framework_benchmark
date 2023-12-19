@@ -95,6 +95,7 @@ class TensorflowInferenceEngine:
         tfconf=tf.ConfigProto(allow_soft_placement=True,log_device_placement=False,device_count={'CPU': 1, 'GPU': nbgpu})
         if nbgpu>0:
             tfconf.gpu_options.allow_growth=self.allow_growth
+        
         self.session = tf.Session(config=tfconf)
 
         # This portion of code is risky
@@ -182,6 +183,6 @@ if __name__ == "__main__":
             # Check if 'TF_XLA_FLAGS' is set in the environment
             tf_xla_flags = os.environ.get("TF_XLA_FLAGS")
             if tf_xla_flags is not None and tf_xla_flags == "--tf_xla_auto_jit=2":
-                BENCH(TensorflowInferenceEngine, model_path, config, [128])
+                BENCH(TensorflowInferenceEngine, model_path, config, [8,16,32,64,128])
             else:
                 print("TF_XLA_FLAGS is not set or has an incorrect value.")

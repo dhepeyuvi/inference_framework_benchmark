@@ -96,7 +96,7 @@ def do_inference(engine, pics_1, h_input_1, d_input_1, h_output, d_output, strea
         return out
 
 # https://developer.nvidia.com/blog/speeding-up-deep-learning-inference-using-tensorflow-onnx-and-tensorrt/
-path="./models_lib/ONNX/ResNet50.onnx"
+path="/home/work/inference_framework_benchmark/models_lib/ONNX/ResNet50.onnx"
 
 import numpy as np
 x=np.random.uniform(0,1,(32,224,224,3)).astype(np.float32)

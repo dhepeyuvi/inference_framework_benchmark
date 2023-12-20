@@ -156,22 +156,17 @@ if __name__ == "__main__":
         config["XLA"] = True
         print(config)
         # Directory containing pb files
-        models_lib_dir = "./models_lib/ONNX"
+        models_lib_dir = "/home/work/inference_framework_benchmark/models_lib/ONNX"
 
         # List all .pb files in the directory
-        pb_files = [f for f in os.listdir(models_lib_dir) if f.endswith(".onnx")]
+        onnx_files = [f for f in os.listdir(models_lib_dir) if f.endswith(".onnx")]
 
         # Check if at least one .pb file is found
         if not pb_files:
             print("No .onnx files found in the directory:", models_lib_dir)
             sys.exit(1)
-    for g in [1]:
-        config = {}
-        config["gpuid"] = g
-        print(config)
-        for path in ["./models_lib/ONNX/DenseNet201.onnx",
-                      "./models_lib/ONNX/ResNet50.onnx" ,
-                      "./models_lib/ONNX/EfficientNetB0.onnx",
-                      "./models_lib/ONNX/VGG19.onnx"]:
+        
+        for path in onnx_files:
             print(path)
             BENCH(TrtInferenceEngine,path,config,[64])
+

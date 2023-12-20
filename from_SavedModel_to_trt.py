@@ -38,7 +38,7 @@ def from_SavedModelFile_to_trtFile(SavedModel_path, trt_path, arithmetic="FP32")
     converter.save(trt_path)
 
 if __name__ == "__main__":
-    ROOT = "."
+    ROOT = "/home/work/inference_framework_benchmark"
     INPUT_SAVED_MODEL_DIR = ROOT + "/models_lib/TF_SavedModel/"
 
     arithmetic="FP32"

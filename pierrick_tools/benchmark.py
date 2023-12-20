@@ -8,7 +8,7 @@ import time
 import os
 
 
-models_lib_path="/home/work/inference_framework_benchmark/models_lib"
+models_lib_path="./models_lib"
 x = np.random.uniform(0, 1, (4096, 224, 224, 3)).astype(np.float32)
 x2 = np.random.uniform(0, 1, (1, 224, 224, 3)).astype(np.float32)
 GPU_ID=0
@@ -23,7 +23,8 @@ def BENCH(model_ptr, path, config,POSSIBLE_BATCH_SIZE=[1, 2, 4, 8, 16, 32]):
     throughputs=[]
     for b in POSSIBLE_BATCH_SIZE:
         config["batch_size"]=b
-
+        print("="*18)
+        print(f"Results for Batch Size {b}")
         st=time.time()
         model=model_ptr(path,config)
         build_time = time.time() - st
@@ -35,9 +36,9 @@ def BENCH(model_ptr, path, config,POSSIBLE_BATCH_SIZE=[1, 2, 4, 8, 16, 32]):
         print(f'Time:{enlapsted_time} milisecs')
         through=round(len(x) / enlapsted_time)
         
-        print(f"throughput:{through} preds/sec", through)
+        print(f"throughput:{through} preds/sec")
         throughputs.append(through)
-  
+        print("="*18)
         """
         #del model
         if config["batch_size"]==1:

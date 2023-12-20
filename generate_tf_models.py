@@ -213,8 +213,8 @@ def RUN():
         #if model_name!="ResNet50":
         #    print("break")
         #else:
-        SavedModel_path="/home/work/inference_framework_benchmark/models_lib/TF_SavedModel/" + model_name
-        PB_path="/home/work/inference_framework_benchmark/models_lib/TF_PB/" + model_name+".pb"
+        SavedModel_path="./models_lib/TF_SavedModel/" + model_name
+        PB_path="./models_lib/TF_PB/" + model_name+".pb"
         save_models(builder, model_name, SavedModel_path, PB_path)
         print("saved")
 

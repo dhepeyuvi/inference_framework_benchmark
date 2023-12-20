@@ -1,0 +1,3 @@
+TF_XLA_FLAGS="--tf_xla_auto_jit=2"
+CUDA_HOME="/usr/local/cuda"
+XLA_FLAGS="--xla_gpu_cuda_data_dir=/usr/local/cuda"

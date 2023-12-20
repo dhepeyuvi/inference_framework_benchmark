@@ -60,7 +60,7 @@ if __name__ == '__main__':
         input_regex=sys.argv[2]
         output_regex=sys.argv[3]
     except:
-        pb_path="/home/work/inference_framework_benchmark/models_lib/TF_PB/ResNet50.pb"
+        pb_path="./models_lib/TF_PB/ResNet50.pb"
         input_regex="^x:|input:"
         output_regex="Softmax:"
 
